@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NICT</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+
+        .sidebar {
+          height: 800px;
+          width: 300px;
+          position: absolute;
+          top: 0;
+          left: -300px;
+          background-color: #ff3c00;
+          padding-top: 20px;
+          border-radius: 15px;
+        }
+
+        .sidebar ul {
+          list-style-type: none;
+          padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+            padding-left: 70px;
+            font-size: 25px;
+        }
+
+        .sidebar ul li a {
+          color: white;
+          text-decoration: none;
+          display: block;
+        }
+
+        .dropdown ul a{
+            font-size: 20px;
+        }
+
+        .sidebar ul li a:hover {
+          background-color: #ff7240;
+        }
+
+        .dropdown-content {
+          display: none;
+        }
+        .dropdown-content-1 {
+          display: none;
+        }
+
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+        .dropdown-1:hover .dropdown-content-1 {
+          display: block;
+        }
+
+        .content {
+            padding: 20px;
+        }
+        .content{
+            padding-top: 10px;
+            background: #ff7240;
+            height: 125px;
+            margin-top: 0;
+            position: relative;
+            padding: 20px;
+        }
+        .content h1{
+            float: right;
+            padding-right: 400px;
+        }
+        .content button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            background: #ff3c00;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+}
+
+        #menu-btn {
+          display: block;
+          position: absolute;
+          top: 20px;
+          left: 330px;
+          z-index: 2;
+          color: white;
+          font-size: 25px;
+          cursor: pointer;
+        }
+
+
+        #close-btn {
+          display: none;
+          position: absolute;
+          top: 20px;
+          left: 330px;
+          z-index: 2;
+          color: white;
+          font-size: 25px;
+          cursor: pointer;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            padding-left: 550px;
+        }
+        .content p{
+            position: absolute;
+            top: 100px;
+            right: 0;
+            font-size: 20px;
+            background: #ff7240;
+            color: black;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div id="menu-btn" onclick="openSidebar()">&#9776;</div>
+<div id="close-btn" onclick="closeSidebar()">&times;</div>
+
+<div class="sidebar" id="sidebar">
+    <img src="https://nict.ind.in/BOB_Ledger/images/nict_logo.png" width="300">
+    <ul>
+        <li><a href="{% url 'Home' %}">Home</a></li>
+        <li class="dropdown-1">
+            <a>Devices</a>
+            <ul class="dropdown-content-1">
+                <li><a href="{% url 'stock_entry_details' %}">Stock Entry</a></li>
+                <li><a href="{% url 'issue_state_office' %}">Issue State Office</a></li>
+                <li><a href="#">Issue Kiosk</a></li>
+                <li><a href="#">Head Office Approved</a></li>
+                <li><a href="#">State Office Conformation</a></li>
+            </ul>
+        <li class="dropdown">
+            <a>Utility</a>
+            <ul class="dropdown-content">
+                <li><a href="{% url 'User' %}">User</a></li>
+                <li><a href="{% url 'Bank_Details' %}">Bank Details</a></li>
+                <li><a href="{% url 'Stateoffice' %}">State Office</a></li>
+                <li><a href="{% url 'vendor' %}">Vendor</a></li>
+                <li><a href="{% url 'pay_mode' %}">Pay Mode</a></li>
+                <li><a href="{% url 'Device_details' %}">Device Details</a></li>
+                <li><a href="{% url 'role_details' %}">Role Details</a></li>
+                <li><a href="{% url 'office_details' %}">Office Details</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Purchase Order</a></li>
+        <li><a href="#">Requirement</a></li>
+        <li><a href="#">Exit</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="content">
+    <img src="https://nict.ind.in/BOB_Ledger/images/nict_logo.png" width="300">
+    <h1>Device Management System (DMS)</h1>
+    <button type="submit" onclick="logout()" >Logout</button>
+    <p id="todaysDate"></p>
+</div>
+<form name="office details" method="post" action="{% url 'office_details_update' %}" enctype = "multipart/form-data">
+        {% csrf_token %}
+        <h1>Edit Office Details</h1>
+        <input type="hidden" name= "office_id" value="{{data.0}}" required>
+        Name:    <input type="text" name= "name" value="{{data.1}}" required>
+        State ID:    <input type="text" name= "state_id" value="{{data.2}}" required>
+        Division:    <input type="text" name= "division" value="{{data.3}}" required>
+        District:    <input type="text" name= "district" value="{{data.4}}" required>
+        City:    <input type="text" name= "city" value="{{data.5}}" required>
+        Address:    <input type="text" name= "address" value="{{data.6}}" required>
+        Pin:    <input type="text" name= "pin" value="{{data.7}}" required>
+        Phone No.:    <input type="text" name= "phone_no" value="{{data.8}}" required>
+        Mobile No.:    <input type="text" name= "mobile_no" value="{{data.9}}" required>
+      <div class="form-group">
+        <button type="submit">Submit</button>
+      </div>
+
+</form>
+<script>
+    function openSidebar() {
+        document.getElementById('sidebar').style.left = '0';
+        document.getElementById('menu-btn').style.display = 'none';
+        document.getElementById('close-btn').style.display = 'block';
+    }
+
+    function closeSidebar() {
+        document.getElementById('sidebar').style.left = '-300px';
+        document.getElementById('menu-btn').style.display = 'block';
+        document.getElementById('close-btn').style.display = 'none';
+    }
+    function logout() {
+        window.location.href=('{% url 'logout' %}')
+
+    }
+    var today = new Date();
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById("todaysDate").innerHTML = today.toLocaleDateString('en-US', options);
+</script>
+
+</body>
+</html>

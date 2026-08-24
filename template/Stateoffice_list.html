@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NICT</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+
+        .sidebar {
+          height: 800px;
+          width: 300px;
+          position: absolute;
+          top: 0;
+          left: -300px;
+          background-color: #ff3c00;
+          padding-top: 20px;
+          border-radius: 15px;
+        }
+
+        .sidebar ul {
+          list-style-type: none;
+          padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+            padding-left: 70px;
+            font-size: 25px;
+        }
+
+        .sidebar ul li a {
+          color: white;
+          text-decoration: none;
+          display: block;
+        }
+
+        .dropdown ul a{
+            font-size: 20px;
+        }
+        .dropdown-1 ul a{
+            font-size: 20px;
+        }
+
+        .sidebar ul li a:hover {
+          background-color: #ff7240;
+        }
+
+        .dropdown-content {
+          display: none;
+        }
+        .dropdown-content-1 {
+          display: none;
+        }
+
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+        .dropdown-1:hover .dropdown-content-1 {
+          display: block;
+        }
+
+        .content {
+            padding: 20px;
+        }
+        .content{
+            padding-top: 10px;
+            background: #ff7240;
+            height: 125px;
+            margin-top: 0;
+            position: relative;
+            padding: 20px;
+        }
+        .content h1{
+            float: right;
+            padding-right: 400px;
+        }
+        .content button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            background: #ff3c00;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+}
+        #menu-btn {
+          display: block;
+          position: absolute;
+          top: 20px;
+          left: 330px;
+          z-index: 2;
+          color: white;
+          font-size: 25px;
+          cursor: pointer;
+        }
+
+
+        #close-btn {
+          display: none;
+          position: absolute;
+          top: 20px;
+          left: 330px;
+          z-index: 2;
+          color: white;
+          font-size: 25px;
+          cursor: pointer;
+        }
+        .content p{
+            position: absolute;
+            top: 100px;
+            right: 0;
+            font-size: 20px;
+            background: #ff7240;
+            color: black;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+            .container {
+    margin: 80px 240px 60px 240px;
+    padding: 0px 100px 100px 100px;
+}
+
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customers td,
+#customers th {
+    border: 1px solid rgb(17, 4, 4);
+    padding: 6px;
+}
+
+#customers tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+    background-color: #ddd;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #ff7240;
+    color: white;
+}
+
+#customers #Edit {
+    background-color: blue;
+    border-color: white;
+    border-radius: 5px;
+    padding: 8px;
+    color: white;
+}
+
+#customers #Delete {
+    background-color: red;
+    border-color: white;
+    border-radius: 5px;
+    padding: 8px;
+    color: white;
+}
+
+
+
+#customers button {
+    width: 100%;
+}
+
+
+.container h1 {
+    color: #ff3c00;
+}
+
+.container1 input {
+    padding: 8px;
+}
+
+.container2 input {
+    padding: 8px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+form button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+ form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+
+<div id="menu-btn" onclick="openSidebar()">&#9776;</div>
+<div id="close-btn" onclick="closeSidebar()">&times;</div>
+
+<div class="sidebar" id="sidebar">
+    <img src="https://nict.ind.in/BOB_Ledger/images/nict_logo.png" width="300">
+    <ul>
+        <li><a href="{% url 'Home' %}">Home</a></li>
+        <li class="dropdown-1">
+            <a>Devices</a>
+            <ul class="dropdown-content-1">
+                <li><a href="{% url 'stock_entry_details' %}">Stock Entry</a></li>
+                <li><a href="{% url 'issue_state_office' %}">Issue State Office</a></li>
+                <li><a href="#">Issue Kiosk</a></li>
+                <li><a href="#">Head Office Approved</a></li>
+                <li><a href="#">State Office Conformation</a></li>
+            </ul>
+        <li class="dropdown">
+            <a>Utility</a>
+            <ul class="dropdown-content">
+                <li><a href="{% url 'User' %}">User</a></li>
+                <li><a href="{% url 'Bank_Details' %}">Bank Details</a></li>
+                <li><a href="{% url 'Stateoffice' %}">State Office</a></li>
+                <li><a href="{% url 'vendor' %}">Vendor</a></li>
+                <li><a href="{% url 'pay_mode' %}">Pay Mode</a></li>
+                <li><a href="{% url 'Device_details' %}">Device Details</a></li>
+                <li><a href="{% url 'role_details' %}">Role Details</a></li>
+                <li><a href="{% url 'office_details' %}">Office Details</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Purchase Order</a></li>
+        <li><a href="#">Requirement</a></li>
+        <li><a href="#">Exit</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <button type="submit" onclick="logout()" >Logout</button>
+    <img src="https://nict.ind.in/BOB_Ledger/images/nict_logo.png" width="300">
+    <h1>Device Management System (DMS)</h1>
+    <p id="todaysDate"></p>
+</div>
+<div class="container">
+        <h1>State office Details</h1>
+        <table id="customers" border="1">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>State office Name</th>
+                    <th>ISO Code</th>
+                    <th colspan="2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+                <tr>
+                    <td>{{ i.0 }}</td>
+                    <td>{{ i.1 }}</td>
+                    <td>{{ i.2 }}</td>
+                    <td>
+                        <a href="{% url 'Stateoffice_Edit' i.0 %}"><button id="Edit">Edit</button></a>
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'Stateoffice_delete' i.0 %}" style="display:inline; margin:0; padding:0;">
+                            {% csrf_token %}<button id="Delete" type="submit" style="width:auto; margin:0;">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+<script>
+    function openSidebar() {
+        document.getElementById('sidebar').style.left = '0';
+        document.getElementById('menu-btn').style.display = 'none';
+        document.getElementById('close-btn').style.display = 'block';
+    }
+
+    function closeSidebar() {
+        document.getElementById('sidebar').style.left = '-300px';
+        document.getElementById('menu-btn').style.display = 'block';
+        document.getElementById('close-btn').style.display = 'none';
+    }
+
+    function logout() {
+        window.location.href=('{% url 'logout' %}')
+
+    }
+
+    var today = new Date();
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById("todaysDate").innerHTML = today.toLocaleDateString('en-US', options);
+
+</script>
+
+</body>
+</html>
