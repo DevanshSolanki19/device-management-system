@@ -1,157 +1,159 @@
-# Device Management System — Original Templates, Proper Django Backend
+# Device Management System
 
-This version keeps the original HTML/CSS templates and the same pages, labels,
-colours, menus, and feature flow from the uploaded project. Only the Django
-backend and the necessary template actions were corrected.
+A web-based device and inventory management application developed using Django and MySQL. The system manages devices, stock entries, offices, vendors, users, roles and other supporting master data.
 
-## What was changed
+## Features
 
-- The original templates in `template/` are still used.
-- Raw `mysql.connector` queries were replaced with Django ORM queries.
-- Database tables are represented by models in `app/models.py`.
-- Server-side validation is handled by forms in `app/forms.py`.
-- Django authentication now creates a real login session.
-- Passwords are stored with Django password hashing, never as plain text.
-- The selected role is checked during login.
-- CRUD requests use model instances and `get_object_or_404()`.
-- Delete operations use POST forms with CSRF protection.
-- URLs use Django URL names instead of broken literal paths.
-- Database credentials are read from environment variables.
-- Django admin and automated tests were added.
+* Secure login and session-based authentication
+* Role-aware user management
+* Vendor and bank management
+* State and office management
+* Device-type and stock-entry management
+* Payment-mode and role management
+* Create, read, update and delete operations
+* Form validation using Django forms
+* CSRF-protected form submissions
+* Custom Django admin with search and filters
+* MySQL database integration
+* Automated Django tests
 
-No new dashboard design or additional inventory workflow was introduced.
+## Technology Stack
 
-## Project structure
+* Python
+* Django
+* MySQL
+* Django ORM
+* HTML
+* CSS
+* JavaScript
+* Git and GitHub
+
+## Application Modules
+
+* Authentication
+* User Management
+* Role Management
+* Vendor Management
+* Bank Management
+* State Office Management
+* Office Management
+* Device Management
+* Stock Management
+* Payment Mode Management
+
+## Database Relationships
+
+* One state can contain multiple offices.
+* One device type can have multiple stock entries.
+* One office can be assigned to multiple user profiles.
+* One role can be assigned to multiple users.
+* Each Django user has one DMS user profile.
+
+## Project Structure
 
 ```text
+app/
+├── management/
+├── migrations/
+├── views/
+│   ├── authentication.py
+│   ├── inventory.py
+│   ├── master_data.py
+│   ├── offices.py
+│   └── users.py
+├── admin.py
+├── forms.py
+├── models.py
+├── tests.py
+└── urls.py
+
 project/
-├── app/
-│   ├── admin.py
-│   ├── forms.py
-│   ├── models.py
-│   ├── signals.py
-│   ├── urls.py
-│   ├── views/
-│   │   ├── authentication.py
-│   │   ├── inventory.py
-│   │   ├── master_data.py
-│   │   ├── offices.py
-│   │   └── users.py
-│   └── tests.py
-├── project/
-│   ├── settings.py
-│   └── urls.py
-├── template/          # The original templates supplied in project.zip
-├── static/
-├── .env.example
-├── requirements.txt
-└── manage.py
+├── settings.py
+├── urls.py
+├── asgi.py
+└── wsgi.py
+
+template/
+static/
+manage.py
 ```
 
-## Models matching the original pages
+## Local Setup
 
-| Original page/table | Django model |
-| --- | --- |
-| Vendor | `Vendor` |
-| Bank Details | `Bank` |
-| State Office | `StateOffice` |
-| Office Details | `OfficeDetails` |
-| Device Details | `DeviceDetails` |
-| Stock Entry | `StockEntry` |
-| Pay Mode | `PaymentMode` |
-| Role Details | `Role` |
-| User | Django `User` + `DMSUserProfile` |
+Clone the repository:
 
-`OfficeDetails.state` and `StockEntry.device_type` are proper foreign-key
-relationships. Application users use Django's built-in `User` model, while the
-office, role, status, and token fields are stored in `DMSUserProfile`.
+```bash
+git clone https://github.com/DevanshSolanki19/device-management-system.git
+cd device-management-system
+```
 
-## Run the project
+Create and activate a virtual environment:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver
 ```
 
-On Windows, activate the environment with:
-
-```powershell
-.venv\Scripts\activate
-```
-
-Open <http://127.0.0.1:8000/>. A superuser can log in by selecting `Admin`.
-
-Run validation and tests:
-
-```bash
-python manage.py check
-python manage.py test
-```
-
-## Optional MySQL setup
-
-The project uses SQLite by default so it starts immediately. To use MySQL:
+Install the dependencies:
 
 ```bash
 pip install -r requirements-mysql.txt
 ```
 
-Create a database and dedicated user, then update `.env`:
+Create the MySQL database:
+
+```sql
+CREATE DATABASE nict_dms CHARACTER SET utf8mb4;
+```
+
+Create `.env` from the example file:
+
+```bash
+cp .env.example .env
+```
+
+Configure your MySQL credentials inside `.env`:
 
 ```dotenv
 DB_ENGINE=mysql
 DB_NAME=nict_dms
-DB_USER=dms_user
-DB_PASSWORD=your-strong-password
+DB_USER=your_mysql_user
+DB_PASSWORD=your_mysql_password
 DB_HOST=127.0.0.1
 DB_PORT=3306
 ```
 
-Then run `python manage.py migrate`.
-
-The old ZIP did not contain a database dump, so existing raw MySQL records are
-not included in this project. Create new records through the existing pages or
-export/import the old data separately. Old plain-text passwords must not be
-imported; create those accounts again through Django.
-
-## Import the old DMS data dump
-
-The project includes a safe one-time importer for the original data-only MySQL
-dump. It imports state offices, offices, roles, banks, payment modes, devices,
-vendors, and stock entries into the proper Django models.
-
-First configure MySQL in `.env` and create the Django tables:
+Create the database tables:
 
 ```bash
 python manage.py migrate
 ```
 
-Preview the import without saving anything:
-
-```bash
-python manage.py import_legacy_dms /absolute/path/to/demo.sql --dry-run
-```
-
-Review the summary and warnings. Then perform the import:
-
-```bash
-python manage.py import_legacy_dms /absolute/path/to/demo.sql
-```
-
-The command is safe to run again: records already present are reported instead
-of being duplicated. Conflicting legacy rows, such as repeated GSTIN or device
-numbers with different details, are skipped and reported.
-
-Legacy `hello`, `user`, `auth_user`, session, permission, and migration records
-are deliberately not copied. Some old login tables contain plain-text
-passwords, and the internal Django tables belong to the old application. Create
-secure accounts for this project instead:
+Create an administrator:
 
 ```bash
 python manage.py createsuperuser
 ```
+
+Start the server:
+
+```bash
+python manage.py runserver
+```
+
+Open `http://127.0.0.1:8000/` in a browser.
+
+## Testing
+
+Run the automated tests:
+
+```bash
+python manage.py test
+```
+
+## Author
+
+**Devansh Solanki**
+
+GitHub: [DevanshSolanki19](https://github.com/DevanshSolanki19)
+
